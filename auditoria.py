@@ -34,3 +34,32 @@ for cart in carts:
 
 print("Filtrado completado")
 print("Carritos analizados:", len(totales_por_carrito))
+
+
+# TAREA 3: IDENTIFICAR GANADOR Y CONSULTAR USUARIO
+
+if not totales_por_carrito:
+    print("No se encontraron carritos")
+    exit()
+
+ganador = totales_por_carrito[0]
+
+for carrito in totales_por_carrito:
+    if carrito["total"] > ganador["total"]:
+        ganador = carrito
+
+user_id = ganador["userId"]
+max_productos = ganador["total"]
+
+URL_USER = f"https://dummyjson.com/users/{user_id}"
+
+response_user = requests.get(URL_USER)
+
+if response_user.status_code == 200:
+    usuario = response_user.json()
+
+    print("Usuario ganador encontrado")
+    print("ID:", user_id)
+else:
+    print("Error al obtener usuario:", response_user.status_code)
+    exit()
