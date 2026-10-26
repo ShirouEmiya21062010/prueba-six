@@ -15,3 +15,22 @@ if response.status_code == 200:
 else:
     print("Error al obtener carritos:", response.status_code)
     exit()
+# TAREA 2: FILTRO DE DESCUENTOS
+
+totales_por_carrito = []
+
+for cart in carts:
+    suma_validos = 0
+
+    for product in cart["products"]:
+        if product["discountPercentage"] < 12:
+            suma_validos += product["quantity"]
+
+    totales_por_carrito.append({
+        "cartId": cart["id"],
+        "userId": cart["userId"],
+        "total": suma_validos
+    })
+
+print("Filtrado completado")
+print("Carritos analizados:", len(totales_por_carrito))
